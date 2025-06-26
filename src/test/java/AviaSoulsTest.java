@@ -12,6 +12,7 @@ public class AviaSoulsTest {
     Ticket ticket5 = new Ticket("Москва", "Калининград", 9000, 16, 21);
     Ticket ticket6 = new Ticket("Москва", "Екатеринбург", 6000, 8, 10);
     Ticket ticket7 = new Ticket("Москва", "Волгоград", 8000, 15, 18);
+    Ticket ticket8 = new Ticket("Москва", "Воронеж", 4000, 10, 11);
 
    @Test
    public void thePriceIsHigher() {
@@ -47,13 +48,14 @@ public class AviaSoulsTest {
         tickets.add(ticket5);
         tickets.add(ticket6);
         tickets.add(ticket7);
+        tickets.add(ticket8);
 
 
         TicketPriceComparator priceComparator = new TicketPriceComparator();
 
         Arrays.sort(tickets.findAll(), priceComparator);
 
-        Ticket[] expected = { ticket2, ticket6, ticket7, ticket5, ticket3, ticket1, ticket4 };
+        Ticket[] expected = { ticket8, ticket2, ticket6, ticket7, ticket5, ticket3, ticket1, ticket4 };
         Ticket[] actual = tickets.findAll();
 
         Assertions.assertArrayEquals(expected, actual);
@@ -69,6 +71,7 @@ public class AviaSoulsTest {
         tickets.add(ticket5);
         tickets.add(ticket6);
         tickets.add(ticket7);
+        tickets.add(ticket8);
 
         Ticket[] expected = {ticket7};
         Ticket[] actual = tickets.search("Москва", "Волгоград");
@@ -77,7 +80,7 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void test1() {
+    public void searchTestMany() {
         AviaSouls tickets = new AviaSouls();
         tickets.add(ticket1);
         tickets.add(ticket2);
@@ -86,6 +89,7 @@ public class AviaSoulsTest {
         tickets.add(ticket5);
         tickets.add(ticket6);
         tickets.add(ticket7);
+        tickets.add(ticket8);
 
         Ticket[] expected = {ticket1, ticket5};
         Ticket[] actual = tickets.search("Москва", "Калининград");
@@ -103,13 +107,50 @@ public class AviaSoulsTest {
         tickets.add(ticket5);
         tickets.add(ticket6);
         tickets.add(ticket7);
+        tickets.add(ticket8);
 
         TicketTimeComparator timeComparator = new TicketTimeComparator();
 
         Arrays.sort(tickets.findAll(), timeComparator);
 
-        Ticket[] expected = {ticket2, ticket6, ticket1, ticket7, ticket3, ticket5, ticket4};
+        Ticket[] expected = {ticket2, ticket8, ticket6, ticket1, ticket7, ticket3, ticket5, ticket4};
         Ticket[] actual = tickets.findAll();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void theTicketIsTheCheapest() {
+        AviaSouls tickets = new AviaSouls();
+        tickets.add(ticket1);
+        tickets.add(ticket2);
+        tickets.add(ticket3);
+        tickets.add(ticket4);
+        tickets.add(ticket5);
+        tickets.add(ticket6);
+        tickets.add(ticket7);
+        tickets.add(ticket8);
+
+        Ticket[] expected = {ticket8};
+        Ticket[] actual = tickets.search("Москва", "Воронеж");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void theTicketIsTheMostExpensive() {
+        AviaSouls tickets = new AviaSouls();
+        tickets.add(ticket1);
+        tickets.add(ticket2);
+        tickets.add(ticket3);
+        tickets.add(ticket4);
+        tickets.add(ticket5);
+        tickets.add(ticket6);
+        tickets.add(ticket7);
+        tickets.add(ticket8);
+
+        Ticket[] expected = {ticket4};
+        Ticket[] actual = tickets.search("Москва", "Челябинск");
 
         Assertions.assertArrayEquals(expected, actual);
     }
