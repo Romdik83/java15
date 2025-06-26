@@ -7,20 +7,20 @@ import java.util.Arrays;
 public class AviaSoulsTest {
     Ticket ticket1 = new Ticket("Москва", "Калининград", 12000, 10, 13);
     Ticket ticket2 = new Ticket("Москва", "Санкт-Петербург", 6000, 18, 19);
-    Ticket ticket3 = new Ticket("Москва", "Сочи", 11000, 14,18);
-    Ticket ticket4 = new Ticket("Москва", "Челябинск", 24000, 11,22);
+    Ticket ticket3 = new Ticket("Москва", "Сочи", 11000, 14, 18);
+    Ticket ticket4 = new Ticket("Москва", "Челябинск", 24000, 11, 22);
     Ticket ticket5 = new Ticket("Москва", "Калининград", 9000, 16, 21);
     Ticket ticket6 = new Ticket("Москва", "Екатеринбург", 6000, 8, 10);
     Ticket ticket7 = new Ticket("Москва", "Волгоград", 8000, 15, 18);
     Ticket ticket8 = new Ticket("Москва", "Воронеж", 4000, 10, 11);
 
-   @Test
-   public void thePriceIsHigher() {
-       int expected = 1;
-       int actual = ticket1.compareTo(ticket2);
+    @Test
+    public void thePriceIsHigher() {
+        int expected = 1;
+        int actual = ticket1.compareTo(ticket2);
 
-       Assertions.assertEquals(expected, actual);
-   }
+        Assertions.assertEquals(expected, actual);
+    }
 
     @Test
     public void thePriceIsLess() {
@@ -55,14 +55,14 @@ public class AviaSoulsTest {
 
         Arrays.sort(tickets.findAll(), priceComparator);
 
-        Ticket[] expected = { ticket8, ticket2, ticket6, ticket7, ticket5, ticket3, ticket1, ticket4 };
+        Ticket[] expected = {ticket8, ticket2, ticket6, ticket7, ticket5, ticket3, ticket1, ticket4};
         Ticket[] actual = tickets.findAll();
 
         Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void searchTestOne() {
+    public void searchTestOne() {    //находится один билет
         AviaSouls tickets = new AviaSouls();
         tickets.add(ticket1);
         tickets.add(ticket2);
@@ -80,7 +80,7 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void searchTestMany() {
+    public void searchTestMany() {    // находится несколько билетов
         AviaSouls tickets = new AviaSouls();
         tickets.add(ticket1);
         tickets.add(ticket2);
@@ -98,7 +98,25 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void ticketTimeComparatorTestAll() {
+    public void thereIsNotASingleTicket() {    // не находится ни один билет
+        AviaSouls tickets = new AviaSouls();
+        tickets.add(ticket1);
+        tickets.add(ticket2);
+        tickets.add(ticket3);
+        tickets.add(ticket4);
+        tickets.add(ticket5);
+        tickets.add(ticket6);
+        tickets.add(ticket7);
+        tickets.add(ticket8);
+
+        Ticket[] expected = new Ticket[0];
+        Ticket[] actual = tickets.search("Москва", "Ереван");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ticketTimeComparatorTestAll() {  // сортировка по времени
         AviaSouls tickets = new AviaSouls();
         tickets.add(ticket1);
         tickets.add(ticket2);
@@ -154,5 +172,4 @@ public class AviaSoulsTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
-
 }
