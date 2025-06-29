@@ -3,13 +3,14 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class AviaSoulsTest {
-    Ticket ticket1 = new Ticket("Москва", "Калининград", 12000, 10, 13);
+    Ticket ticket1 = new Ticket("Москва", "Калининград", 12000, 16, 19);
     Ticket ticket2 = new Ticket("Москва", "Санкт-Петербург", 6000, 18, 19);
-    Ticket ticket3 = new Ticket("Москва", "Сочи", 11000, 14, 18);
+    Ticket ticket3 = new Ticket("Москва", "Калининград", 11000, 14, 18);
     Ticket ticket4 = new Ticket("Москва", "Челябинск", 24000, 11, 22);
-    Ticket ticket5 = new Ticket("Москва", "Калининград", 9000, 16, 21);
+    Ticket ticket5 = new Ticket("Москва", "Калининград", 9000, 10, 15);
     Ticket ticket6 = new Ticket("Москва", "Екатеринбург", 6000, 8, 10);
     Ticket ticket7 = new Ticket("Москва", "Волгоград", 8000, 15, 18);
     Ticket ticket8 = new Ticket("Москва", "Воронеж", 4000, 10, 11);
@@ -91,7 +92,7 @@ public class AviaSoulsTest {
         tickets.add(ticket7);
         tickets.add(ticket8);
 
-        Ticket[] expected = {ticket1, ticket5};
+        Ticket[] expected = {ticket1, ticket3, ticket5};
         Ticket[] actual = tickets.search("Москва", "Калининград");
 
         Assertions.assertArrayEquals(expected, actual);
@@ -172,4 +173,65 @@ public class AviaSoulsTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void testSortTicketsWithComporator() {
+        AviaSouls manager = new AviaSouls();
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
+        manager.add(ticket6);
+        manager.add(ticket7);
+        manager.add(ticket8);
+
+        Comparator<Ticket> comparator = new TicketTimeComparator();
+
+        Ticket[] expected = {ticket1, ticket3, ticket5};
+        Ticket[] actual = manager.searchAndSortBy("Москва", "Калининград", comparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testSortTicketsWithComporator2() {
+        AviaSouls manager = new AviaSouls();
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
+        manager.add(ticket6);
+        manager.add(ticket7);
+        manager.add(ticket8);
+
+        Comparator<Ticket> comparator = new TicketTimeComparator();
+
+        Ticket[] expected = {};
+        Ticket[] actual = manager.searchAndSortBy("Москва", "Ереван", comparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testSortTicketsWithComporator3() {
+        AviaSouls manager = new AviaSouls();
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
+        manager.add(ticket6);
+        manager.add(ticket7);
+        manager.add(ticket8);
+
+        Comparator<Ticket> comparator = new TicketTimeComparator();
+
+        Ticket[] expected = {ticket4};
+        Ticket[] actual = manager.searchAndSortBy("Москва", "Челябинск", comparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+    
 }
